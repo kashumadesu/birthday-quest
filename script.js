@@ -204,6 +204,15 @@ function handleAuth(e) {
   }
 }
 
+// Helper for the fake low-battery toast
+function triggerToast() {
+  const toast = document.getElementById('toast-distraction');
+  if (toast) {
+    toast.style.display = 'flex';
+    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+  }
+}
+
 function renderQuestion() {
   isTransitioning = false;
   runawayTaps = 0;
@@ -213,6 +222,20 @@ function renderQuestion() {
 
   if (q.theme === 'theme-stitch' && stitchVideo) {
     stitchVideo.play().catch(() => {});
+  }
+
+  // Distraction: Low battery warning toast on Question 2
+  if (currentQ === 1) {
+    setTimeout(triggerToast, 1000);
+  }
+
+  // Distraction: Temporary mirror flip on Question 9
+  if (currentQ === 8) {
+    const leftPane = document.querySelector('.left-pane');
+    if (leftPane) {
+      leftPane.classList.add('card-flip-glitch');
+      setTimeout(() => leftPane.classList.remove('card-flip-glitch'), 2200);
+    }
   }
 
   document.getElementById('quiz-level-badge').textContent = `LEVEL ${currentQ + 1} OF ${quizData.length}`;
