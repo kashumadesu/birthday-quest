@@ -100,7 +100,7 @@ body.warning-mode {
   cursor: pointer;
 }
 
-/* 2. QUEST THEME BACKGROUNDS */
+/* 2. QUEST THEME BACKGROUNDS & THEME VARIABLES */
 body.quest-mode {
   min-height: 100vh;
   display: flex;
@@ -119,8 +119,13 @@ body.quest-mode {
 
 /* Easy: Stitch Theme */
 body.theme-stitch {
+  --theme-accent: #0284c7;
+  --theme-border: #38bdf8;
+  --theme-btn-bg: rgba(2, 132, 199, 0.12);
+  --theme-btn-hover: rgba(2, 132, 199, 0.22);
+  --theme-progress: #0284c7;
   background-image: url('stitch.jpg');
-  color: #1b57c5;
+  color: #0c4a6e;
 }
 body.theme-stitch #stitch-video-bg {
   display: none;
@@ -128,6 +133,11 @@ body.theme-stitch #stitch-video-bg {
 
 /* Medium: Goblin Theme */
 body.theme-goblin {
+  --theme-accent: #16a34a;
+  --theme-border: #4ade80;
+  --theme-btn-bg: rgba(22, 163, 74, 0.12);
+  --theme-btn-hover: rgba(22, 163, 74, 0.22);
+  --theme-progress: #16a34a;
   background-image: url('goblin.png');
   color: #064e3b;
 }
@@ -137,6 +147,11 @@ body.theme-goblin #stitch-video-bg {
 
 /* Hard & Prize: Cinnamoroll Theme */
 body.theme-cinnamoroll {
+  --theme-accent: #0284c7;
+  --theme-border: #7dd3fc;
+  --theme-btn-bg: rgba(56, 189, 248, 0.15);
+  --theme-btn-hover: rgba(56, 189, 248, 0.25);
+  --theme-progress: #38bdf8;
   background-image: url('cinnamonroll.jpg');
   color: #1e1b4b;
 }
@@ -200,12 +215,13 @@ body.theme-cinnamoroll #stitch-video-bg {
   overflow: hidden;
 }
 
+/* SOLID COLOR PROGRESS BAR */
 .progress-fill {
   height: 100%;
   width: 0%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #f43f5e, #38bdf8);
-  transition: width 0.4s ease;
+  background: var(--theme-progress, #0284c7);
+  transition: width 0.4s ease, background 0.4s ease;
 }
 
 .question-title {
@@ -281,14 +297,17 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-  border-color: #38bdf8;
+  border-color: var(--theme-border, #38bdf8);
   background: #ffffff;
 }
 
+/* SEMI-TRANSPARENT THEME-BORDERED GLASS BUTTON */
 .glass-btn {
-  background: linear-gradient(135deg, #0284c7, #38bdf8);
-  color: white;
-  border: none;
+  background: var(--theme-btn-bg, rgba(2, 132, 199, 0.12));
+  color: var(--theme-accent, #0284c7);
+  border: 2px solid var(--theme-border, #38bdf8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 0.95rem 1.35rem;
   border-radius: 14px;
   font-weight: 700;
@@ -298,18 +317,19 @@ input[type="text"]:focus {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .glass-btn:hover {
+  background: var(--theme-btn-hover, rgba(2, 132, 199, 0.22));
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
   color: inherit !important;
-  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
   box-shadow: none !important;
 }
 
@@ -388,7 +408,7 @@ input[type="text"]:focus {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #38bdf8;
+  background: var(--theme-accent, #38bdf8);
   margin: 0 auto 1.25rem auto;
   box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7);
   animation: statusPulse 1.8s infinite;
@@ -426,7 +446,7 @@ input[type="text"]:focus {
   display: inline-block;
   width: 3px;
   height: 18px;
-  background: #0284c7;
+  background: var(--theme-accent, #0284c7);
   vertical-align: middle;
   margin-left: 2px;
   animation: blink 0.8s infinite;
@@ -452,6 +472,7 @@ input[type="text"]:focus {
     padding: 1.25rem;
   }
 }
+
 /* Troll Elements */
 .runaway-btn {
   position: relative;
@@ -498,6 +519,7 @@ input[type="text"]:focus {
   line-height: 1.6;
   color: #334155;
 }
+
 /* Floating Toast Distraction */
 .toast-distraction {
   position: fixed;
