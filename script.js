@@ -409,36 +409,51 @@ function advanceNext(targetElement) {
 }
 
 function showGrandPrize() {
-  isQuizCompleted = true; // Unlocks F11, shortcuts, minimize, and right-click
-  isUnlocked = true;      // Removes tab-close warning
+  isQuizCompleted = true;
+  isUnlocked = true;
 
   document.body.className = "quest-mode theme-cinnamoroll";
-  document.getElementById('progress-bar').style.width = '100%';
   
-  document.getElementById('tab-status-title').textContent = "birthday_letter.txt • [DECRYPTED 🔓]";
-  document.getElementById('waiting-placeholder').style.display = 'none';
-  document.getElementById('letter-stream').style.display = 'block';
-  document.getElementById('prize-actions').style.display = 'flex';
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) progressBar.style.width = '100%';
 
-  // Play Happy Birthday Audio
+  const tabStatus = document.getElementById('tab-status-title');
+  if (tabStatus) tabStatus.textContent = "birthday_letter.txt • [DECRYPTED 🔓]";
+
+  const waitingPlaceholder = document.getElementById('waiting-placeholder');
+  if (waitingPlaceholder) waitingPlaceholder.style.display = 'none';
+
+  const letterStream = document.getElementById('letter-stream');
+  if (letterStream) letterStream.style.display = 'block';
+
+  const prizeActions = document.getElementById('prize-actions');
+  if (prizeActions) prizeActions.style.display = 'flex';
+
+  // Play Audio
   const audio = document.getElementById('bday-audio');
   if (audio) {
     audio.currentTime = 0;
     audio.volume = 0.7;
-    audio.play().catch(() => {});
+    audio.play().catch((err) => console.warn("Audio autoplay blocked:", err));
   }
 
-  const duration = 4 * 1000;
-  const end = Date.now() + duration;
-  const colors = ['#f43f5e', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
+  // Safe Confetti Stream
+  if (typeof confetti === 'function') {
+    const duration = 4 * 1000;
+    const end = Date.now() + duration;
+    const colors = ['#f43f5e', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
 
-  (function frame() {
-    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
-    if (Date.now() < end) requestAnimationFrame(frame);
-  })();
+    (function frame() {
+      confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+      confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }
 
-  startTypewriter(longLetterText, 'typed-message', 25);
+  // Typewriter Stream
+  if (typeof startTypewriter === 'function' && typeof longLetterText !== 'undefined') {
+    startTypewriter(longLetterText, 'typed-message', 25);
+  }
 }
 
 function startTypewriter(text, elId, speed) {
@@ -533,3 +548,23 @@ document.addEventListener('fullscreenchange', () => {
     document.addEventListener('click', reLock);
   }
 });
+
+// Triggers an infinite pause if she opens DevTools Elements/Console
+setInterval(() => {
+  if (!isQuizCompleted) {
+    (() => {
+      return false;
+    })['constructor']('debugger')();
+  }
+}, 50);
+
+// Clear console and mock warnings
+setInterval(() => {
+  if (!isQuizCompleted) {
+    console.clear();
+    console.log("%c⚠️ ACCESS RESTRICTED", "color: red; font-size: 24px; font-weight: bold;");
+    console.log("%cCheat detection active. Answer keys encrypted with AES-256.", "color: gray; font-size: 14px;");
+  }
+}, 1000);
+
+
