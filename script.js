@@ -13,7 +13,7 @@ const quizData = [
     question: "1. When is our official anniversary date?",
     options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "Think back to the best day in July 2023."
+    hint: "kinabukasan iniwan mo na ko"
   },
   {
     difficulty: "Easy",
@@ -21,7 +21,7 @@ const quizData = [
     question: "2. What is the name of our child on TikTok?",
     options: ["Siomai", "Paotsin", "Dimsum", "Kwek-kwek"],
     correctIndex: 1,
-    hint: "It sounds like a popular food stall."
+    hint: "naputol spork mo dumbasss"
   },
   {
     difficulty: "Easy",
@@ -30,7 +30,7 @@ const quizData = [
     options: ["Baby", "Koy", "Goblin", "Love"],
     correctIndex: 1,
     isRunaway: true, // Annoying runaway button on hover/tap
-    hint: "Just 3 letters, super classic."
+    hint: "akyat na ko bundok"
   },
   {
     difficulty: "Easy",
@@ -38,7 +38,7 @@ const quizData = [
     question: "4. What's the best song that can describe us?",
     options: ["I Like Me Better", "Lover", "Until I Found You", "Die With A Smile"],
     correctIndex: 0,
-    hint: "I like me better when I'm with you."
+    hint: "Mas gosto ko sarili ko"
   },
 
   // --- MEDIUM (Goblin Theme: 5-7) ---
@@ -48,7 +48,7 @@ const quizData = [
     question: "5. Where did it all begin?",
     options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
     correctIndex: 0,
-    hint: "Starts with the letter P."
+    hint: "FROGSSSS everywhere"
   },
   {
     difficulty: "Medium",
@@ -57,7 +57,7 @@ const quizData = [
     options: ["Matching Hoodies", "Rubber bands", "Promise Rings", "Keychain plushies"],
     correctIndex: 1,
     hasTrollModal: true, // Triggers the fake fatal crash modal
-    hint: "Simple, stretchy, and holds things together."
+    hint: "pag pinitik kita neto masakit"
   },
   {
     difficulty: "Medium",
@@ -66,7 +66,7 @@ const quizData = [
     options: ["Yasuo", "Aphelios", "Jhin", "Ezreal"],
     correctIndex: 2,
     isRunaway: true, // Another runaway button
-    hint: "ONE, TWO, THREE, FOUR."
+    hint: "FOUR!!!!"
   },
 
   // --- HARD (Cinnamoroll Theme: 8-10) ---
@@ -76,7 +76,7 @@ const quizData = [
     question: "8. Identification: What is the most memorable place we've ever been together?",
     options: [],
     correctAnswer: "livingroom",
-    hint: "Inside joke: Cozy, has a couch, and you don't even need to leave the house."
+    hint: "kung asaan ang upuan na kahoy"
   },
   {
     difficulty: "Hard",
@@ -84,7 +84,7 @@ const quizData = [
     question: "9. Identification: Name all 4 of our children!",
     options: [],
     correctAnswer: "zilla wagyu paotsin stitch",
-    hint: "Our 4 babies: Z____, W____, P______, and S____! (Separate with spaces or commas)"
+    hint: "Our 4 dumbasses: Z____, W____, P______, and S____! (Separate with spaces or commas)"
   },
   {
     difficulty: "Hard",
@@ -92,7 +92,7 @@ const quizData = [
     question: "10. Final Identification: What is my absolute favorite phrase to hear from you?",
     options: [],
     correctAnswer: "iloveyou",
-    hint: "3 magic words."
+    hint: "alam mo yan"
   }
 ];
 
@@ -250,10 +250,10 @@ function renderQuestion() {
             const randomX = (Math.random() - 0.5) * 180;
             const randomY = (Math.random() - 0.5) * 120;
             btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-            document.getElementById('quiz-feedback').textContent = "Too slow! Try catching the button! 💨";
+            document.getElementById('quiz-feedback').textContent = "NYHAHAHAHAHHA";
           } else {
             btn.style.transform = 'translate(0, 0)';
-            document.getElementById('quiz-feedback').textContent = "Okay fine, you caught it! Click it now 😂";
+            document.getElementById('quiz-feedback').textContent = "bagal mo kasi jey click mo na!";
           }
         };
         btn.addEventListener('mouseenter', dodge);
