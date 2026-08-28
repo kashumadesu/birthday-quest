@@ -1,5 +1,5 @@
 /* =================================================================
-   CUSTOM CONFIGURATION
+   CUSTOM CONFIGURATION: QUESTIONS & BIRTHDAY MESSAGE
    ================================================================= */
 
 const SECRET_PASSKEY = "goblin";
@@ -12,40 +12,40 @@ const quizData = [
     theme: "theme-stitch",
     mascot: "🌺 Stitch 💙",
     themeLabel: "STITCH VIBES 🌴",
-    question: "1. Let's start easy: Where did we have our very first official date?",
-    options: ["That cozy cafe down the street", "At the cinema eating popcorn", "Over a 6-hour Discord study call", "A fast-food drive-thru run"],
+    question: "1. When is our official anniversary date?",
+    options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "It smelled like freshly brewed espresso and warm pastries!"
+    hint: "Think back to the best day in July 2023! ❤️"
   },
   {
     difficulty: "Easy",
     theme: "theme-stitch",
     mascot: "🌺 Stitch 💙",
     themeLabel: "STITCH VIBES 🌴",
-    question: "2. Who is more likely to fall asleep first on late-night calls?",
-    options: ["You, without even saying goodbye", "Me, while promising I'm wide awake", "We both stay awake like owls", "Discord crashes before anyone sleeps"],
+    question: "2. What is the name of our child on TikTok?",
+    options: ["Siomai", "Paotsin", "Dimsum", "Kwek-kwek"],
     correctIndex: 1,
-    hint: "I always say 'I'm just resting my eyes' right before passing out."
+    hint: "It sounds like a legendary food stall! 🥟"
   },
   {
     difficulty: "Easy",
     theme: "theme-stitch",
     mascot: "🌺 Stitch 💙",
     themeLabel: "STITCH VIBES 🌴",
-    question: "3. What is our ultimate comfort food order when we can't decide?",
-    options: ["Korean Fried Chicken & Fries", "Matcha Milk Tea (100% sugar)", "Pizza with stuffed crust", "A massive burger meal"],
+    question: "3. What was the very first nickname I ever gave you?",
+    options: ["Baby", "Koy", "Goblin", "Love"],
+    correctIndex: 1,
+    hint: "Just 3 letters, super classic! 😉"
+  },
+  {
+    difficulty: "Easy",
+    theme: "theme-stitch",
+    mascot: "🌺 Stitch 💙",
+    themeLabel: "STITCH VIBES 🌴",
+    question: "4. What's the best song that can describe us?",
+    options: ["I Like Me Better", "Lover", "Until I Found You", "Die With A Smile"],
     correctIndex: 0,
-    hint: "Crispy, savory, and usually comes with sweet radish!"
-  },
-  {
-    difficulty: "Easy",
-    theme: "theme-stitch",
-    mascot: "🌺 Stitch 💙",
-    themeLabel: "STITCH VIBES 🌴",
-    question: "4. What is my favorite thing to do whenever we hang out?",
-    options: ["Watch you talk passionately about your hobbies", "Just sit in comfortable silence with you", "Steal your food right after you order", "All of the above ❤️"],
-    correctIndex: 3,
-    hint: "There is no wrong way to love spending time with you."
+    hint: "'I like me better when I'm with you...' 🎵✨"
   },
 
   // --- MEDIUM (Goblin Clash of Clans Gold/Green Theme: 5-7) ---
@@ -54,30 +54,30 @@ const quizData = [
     theme: "theme-goblin",
     mascot: "🪙 Goblin ⚔️",
     themeLabel: "CLASH GOBLIN 💚",
-    question: "5. In our IT coding sprints, what is our most frequent 'debugging technique'?",
-    options: ["Reading the official docs meticulously", "Console.log('why is this not working???')", "Deleting the repository entirely", "Asking ChatGPT to rewrite our lives"],
-    correctIndex: 1,
-    hint: "We have hundreds of print statements filling our consoles."
-  },
-  {
-    difficulty: "Medium",
-    theme: "theme-goblin",
-    mascot: "🪙 Goblin ⚔️",
-    themeLabel: "CLASH GOBLIN 💚",
-    question: "6. Which inside joke always makes us burst out laughing immediately?",
-    options: ["The accidental mic unmute incident", "The recursive loop meme we sent at 3 AM", "That time we tried to follow GPS blindly", "The dramatic typo during serious texting"],
+    question: "5. Where did it all begin?",
+    options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
     correctIndex: 0,
-    hint: "Remember when someone didn't realize their audio was live?"
+    hint: "Starts with letter P and has lots of trees! 🌳"
   },
   {
     difficulty: "Medium",
     theme: "theme-goblin",
     mascot: "🪙 Goblin ⚔️",
     themeLabel: "CLASH GOBLIN 💚",
-    question: "7. What was the exact vibe of our very first conversation?",
-    options: ["Super awkward and overly formal", "Instant connection like we knew each other for years", "A debate about JavaScript vs. Python", "Just sharing study notes"],
+    question: "6. What was our very first couple item?",
+    options: ["Matching Hoodies", "Rubber bands", "Promise Rings", "Keychain plushies"],
     correctIndex: 1,
-    hint: "Time flew by so fast that night!"
+    hint: "Simple, stretchy, and holds everything together! 🪢"
+  },
+  {
+    difficulty: "Medium",
+    theme: "theme-goblin",
+    mascot: "🪙 Goblin ⚔️",
+    themeLabel: "CLASH GOBLIN 💚",
+    question: "7. Who is my absolute main champion in League of Legends?",
+    options: ["Yasuo", "Aphelios", "Jhin", "Ezreal"],
+    correctIndex: 2,
+    hint: "ONE, TWO, THREE, FOUR! 🎭"
   },
 
   // --- HARD (Cinnamoroll Pastel Theme: 8-10) ---
@@ -86,47 +86,42 @@ const quizData = [
     theme: "theme-cinnamoroll",
     mascot: "☁️ Cinnamoroll 🎀",
     themeLabel: "CINNAMOROLL ☁️",
-    question: "8. Identification: What is the title of 'our' favorite song or playlist theme?",
+    question: "8. Identification: What is the most memorable place we've ever been together?",
     options: [],
-    correctAnswer: "lover",
-    hint: "Think about the track that always plays on repeat during long study sessions."
+    correctAnswer: "livingroom",
+    hint: "Inside joke: It's cozy, has a couch, and you don't even need to leave the house! 🛋️"
   },
   {
     difficulty: "Hard",
     theme: "theme-cinnamoroll",
     mascot: "☁️ Cinnamoroll 🎀",
     themeLabel: "CINNAMOROLL ☁️",
-    question: "9. Identification: What is the specific pet name or nickname I call you the most?",
+    question: "9. Identification: Name all 4 of our children!",
     options: [],
-    correctAnswer: "baby",
-    hint: "Starts with 'B' and comes out naturally every single day."
+    // Handled in custom verification logic to check for all 4 names
+    correctAnswer: "zilla wagyu paotsin stitch",
+    hint: "Our 4 babies: Z____, W____, P______, and S____! (Separate with spaces or commas) 🐾"
   },
   {
     difficulty: "Hard",
     theme: "theme-cinnamoroll",
     mascot: "☁️ Cinnamoroll 🎀",
     themeLabel: "CINNAMOROLL ☁️",
-    question: "10. Final Verification: Who holds the master root key to my heart?",
+    question: "10. Final Identification: What is my absolute favorite phrase to hear from you?",
     options: [],
-    correctAnswer: "you",
-    hint: "Type 'you' (because it's the absolute truth)!"
+    correctAnswer: "iloveyou",
+    hint: "3 magic words! ❤️"
   }
 ];
 
-const longLetterText = `Dearest Birthday Girl,
+// Your custom birthday message
+const longLetterText = `NYHAHAHAHAHAHAHA happy birthday you goblin looking human! 🎂👹
 
-Happy Birthday to my favorite human, my most reliable teammate, and the prettiest distraction in my life! 🎉❤️
+I hope you enjoy your day without me cuz u stinky! NYAHAHHAH 🤪💨
 
-Being with you makes even the most stressful semester feel manageable and every quiet moment meaningful. Whether we're grinding through code, laughing over ridiculous memes at 2:00 AM, or planning out all the places we'll explore next, having you by my side is my favorite part of every single day.
+And please be kind to others since u are an old hag now! 👵✨
 
-Thank you for your warmth, your boundless patience, your cute quirks, and the genuine comfort you bring into my life. You inspire me to be better, to work harder, and to appreciate all the little moments in between.
-
-I hope this new year brings you high GPAs, zero runtime errors, genuine happiness, and all the success you rightfully deserve. 
-
-I love you more than words, syntax, or code can compile.
-
-Forever your player two,
-With all my love ❤️`;
+I love you so much! That's all bleeeeepppp 😛❤️`;
 
 /* =================================================================
    STATE & LOGIC CONTROLLER
@@ -183,7 +178,7 @@ function handleAuth(e) {
   if (val === cleanStr(SECRET_PASSKEY)) {
     isUnlocked = true;
     authFeedback.style.color = '#a7f3d0';
-    authFeedback.textContent = 'Quarantine Lifted. Unlocking Cute Mode... ✨';
+    authFeedback.textContent = 'Quarantine Lifted. Unlocking Birthday Quest... ✨';
     
     confetti({ particleCount: 35, spread: 70, origin: { y: 0.6 } });
 
@@ -268,12 +263,23 @@ function handleIdentSubmit(e) {
   
   const feedback = document.getElementById('quiz-feedback');
   const q = quizData[currentQ];
-  const answer = cleanStr(identInput.value);
-  const target = cleanStr(q.correctAnswer);
+  const rawInput = identInput.value.toLowerCase();
+  const cleaned = cleanStr(identInput.value);
 
-  const isCorrect = (currentQ === 9) 
-    ? (answer === 'you' || answer === 'me' || answer.length > 1) 
-    : (answer === target);
+  let isCorrect = false;
+
+  // Custom check for Question 9 (children: Zilla, Wagyu, Paotsin, Stitch in any order)
+  if (currentQ === 8) {
+    const hasZilla = rawInput.includes("zilla");
+    const hasWagyu = rawInput.includes("wagyu");
+    const hasPaotsin = rawInput.includes("paotsin");
+    const hasStitch = rawInput.includes("stitch");
+    if (hasZilla && hasWagyu && hasPaotsin && hasStitch) {
+      isCorrect = true;
+    }
+  } else {
+    isCorrect = (cleaned === cleanStr(q.correctAnswer));
+  }
 
   if (isCorrect) {
     advanceNext(identInput);
@@ -325,7 +331,7 @@ function showGrandPrize() {
     if (Date.now() < end) requestAnimationFrame(frame);
   })();
 
-  startTypewriter(longLetterText, 'typed-message', 25);
+  startTypewriter(longLetterText, 'typed-message', 30);
 }
 
 function startTypewriter(text, elId, speed) {
@@ -338,11 +344,12 @@ function startTypewriter(text, elId, speed) {
     if (i < text.length) {
       el.textContent += text.charAt(i);
       i++;
-      const container = document.querySelector('.terminal-box');
-      container.scrollTop = container.scrollHeight;
+      const container = document.querySelector('.letter-card');
+      if (container) container.scrollTop = container.scrollHeight;
     } else {
       clearInterval(typeWriterInterval);
-      document.getElementById('cursor').style.display = 'none';
+      const cursor = document.getElementById('cursor');
+      if (cursor) cursor.style.display = 'none';
     }
   }, speed);
 }
@@ -357,7 +364,8 @@ function copyLetter() {
 
 function restartQuest() {
   if (typeWriterInterval) clearInterval(typeWriterInterval);
-  document.getElementById('cursor').style.display = 'inline-block';
+  const cursor = document.getElementById('cursor');
+  if (cursor) cursor.style.display = 'inline-block';
   currentQ = 0;
 
   document.getElementById('screen-prize').style.display = 'none';
