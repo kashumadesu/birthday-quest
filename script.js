@@ -13,7 +13,7 @@ const quizData = [
     question: "1. When is our official anniversary date?",
     options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "Think back to the best day in July 2023."
+    hint: "kung kelan kita sinagot bruh"
   },
   {
     difficulty: "Easy",
@@ -21,7 +21,7 @@ const quizData = [
     question: "2. What is the name of our child on TikTok?",
     options: ["Siomai", "Paotsin", "Dimsum", "Kwek-kwek"],
     correctIndex: 1,
-    hint: "It sounds like a popular food stall."
+    hint: "Naputol spork mue"
   },
   {
     difficulty: "Easy",
@@ -29,7 +29,7 @@ const quizData = [
     question: "3. What was the very first nickname I ever gave you?",
     options: ["Baby", "Koy", "Goblin", "Love"],
     correctIndex: 1,
-    hint: "Just 3 letters, super classic."
+    hint: "akyat na ko bundok"
   },
   {
     difficulty: "Easy",
@@ -37,7 +37,7 @@ const quizData = [
     question: "4. What's the best song that can describe us?",
     options: ["I Like Me Better", "Lover", "Until I Found You", "Die With A Smile"],
     correctIndex: 0,
-    hint: "I like me better when I'm with you."
+    hint: "mas gosto ko sarili ko"
   },
 
   // --- MEDIUM (Goblin Theme: 5-7) ---
@@ -45,9 +45,9 @@ const quizData = [
     difficulty: "Medium",
     theme: "theme-goblin",
     question: "5. Where did it all begin?",
-    options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
+    options: ["Palmera Park", "Discord Call", "Savano Park", "7-Eleven STI"],
     correctIndex: 0,
-    hint: "Starts with the letter P."
+    hint: "frogs eveywhere"
   },
   {
     difficulty: "Medium",
@@ -55,15 +55,15 @@ const quizData = [
     question: "6. What was our very first couple item?",
     options: ["Matching Hoodies", "Rubber bands", "Promise Rings", "Keychain plushies"],
     correctIndex: 1,
-    hint: "Simple, stretchy, and holds things together."
+    hint: "pag pinitik kita masakit"
   },
   {
     difficulty: "Medium",
     theme: "theme-goblin",
     question: "7. Who is my absolute main champion in League of Legends?",
-    options: ["Yasuo", "Aphelios", "Jhin", "Ezreal"],
+    options: ["Yasuo", "Ka'isa", "Jhin", "Ezreal"],
     correctIndex: 2,
-    hint: "ONE, TWO, THREE, FOUR."
+    hint: "FOUR!!"
   },
 
   // --- HARD (Cinnamoroll Theme: 8-10) ---
@@ -73,7 +73,7 @@ const quizData = [
     question: "8. Identification: What is the most memorable place we've ever been together?",
     options: [],
     correctAnswer: "livingroom",
-    hint: "Inside joke: Cozy, has a couch, and you don't even need to leave the house."
+    hint: "alam ko may upuan na kahot dito (english answer onle)"
   },
   {
     difficulty: "Hard",
@@ -89,15 +89,19 @@ const quizData = [
     question: "10. Final Identification: What is my absolute favorite phrase to hear from you?",
     options: [],
     correctAnswer: "iloveyou",
-    hint: "3 magic words."
+    hint: "alamin mo"
   }
 ];
 
-const longLetterText = `NYHAHAHAHAHAHAHA happy birthday you goblin looking human!
+const longLetterText = `NYHAHAHAHAHAH happy birthday you goblin looking human!
 
 I hope you enjoy your day without me cuz u stinky! NYAHAHHAH
 
 And please be kind to others since u are an old hag now!
+
+But still thank you kasi andito ka for me so super thankful ako
+
+na ikaw partner ko and bawawl mamatay lulululululul
 
 I love you so much! That's all bleeeeepppp`;
 
