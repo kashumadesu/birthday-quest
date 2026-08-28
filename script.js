@@ -13,7 +13,7 @@ const quizData = [
     question: "1. When is our official anniversary date?",
     options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "kung kelan kita sinagot bruh"
+    hint: "Think back to the best day in July 2023."
   },
   {
     difficulty: "Easy",
@@ -21,7 +21,7 @@ const quizData = [
     question: "2. What is the name of our child on TikTok?",
     options: ["Siomai", "Paotsin", "Dimsum", "Kwek-kwek"],
     correctIndex: 1,
-    hint: "Naputol spork mue"
+    hint: "It sounds like a popular food stall."
   },
   {
     difficulty: "Easy",
@@ -29,7 +29,8 @@ const quizData = [
     question: "3. What was the very first nickname I ever gave you?",
     options: ["Baby", "Koy", "Goblin", "Love"],
     correctIndex: 1,
-    hint: "akyat na ko bundok"
+    isRunaway: true, // Annoying runaway button on hover/tap
+    hint: "Just 3 letters, super classic."
   },
   {
     difficulty: "Easy",
@@ -37,7 +38,7 @@ const quizData = [
     question: "4. What's the best song that can describe us?",
     options: ["I Like Me Better", "Lover", "Until I Found You", "Die With A Smile"],
     correctIndex: 0,
-    hint: "mas gosto ko sarili ko"
+    hint: "I like me better when I'm with you."
   },
 
   // --- MEDIUM (Goblin Theme: 5-7) ---
@@ -45,9 +46,9 @@ const quizData = [
     difficulty: "Medium",
     theme: "theme-goblin",
     question: "5. Where did it all begin?",
-    options: ["Palmera Park", "Discord Call", "Savano Park", "7-Eleven STI"],
+    options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
     correctIndex: 0,
-    hint: "frogs eveywhere"
+    hint: "Starts with the letter P."
   },
   {
     difficulty: "Medium",
@@ -55,15 +56,17 @@ const quizData = [
     question: "6. What was our very first couple item?",
     options: ["Matching Hoodies", "Rubber bands", "Promise Rings", "Keychain plushies"],
     correctIndex: 1,
-    hint: "pag pinitik kita masakit"
+    hasTrollModal: true, // Triggers the fake fatal crash modal
+    hint: "Simple, stretchy, and holds things together."
   },
   {
     difficulty: "Medium",
     theme: "theme-goblin",
     question: "7. Who is my absolute main champion in League of Legends?",
-    options: ["Yasuo", "Ka'isa", "Jhin", "Ezreal"],
+    options: ["Yasuo", "Aphelios", "Jhin", "Ezreal"],
     correctIndex: 2,
-    hint: "FOUR!!"
+    isRunaway: true, // Another runaway button
+    hint: "ONE, TWO, THREE, FOUR."
   },
 
   // --- HARD (Cinnamoroll Theme: 8-10) ---
@@ -73,7 +76,7 @@ const quizData = [
     question: "8. Identification: What is the most memorable place we've ever been together?",
     options: [],
     correctAnswer: "livingroom",
-    hint: "alam ko may upuan na kahot dito (english answer onle)"
+    hint: "Inside joke: Cozy, has a couch, and you don't even need to leave the house."
   },
   {
     difficulty: "Hard",
@@ -89,19 +92,15 @@ const quizData = [
     question: "10. Final Identification: What is my absolute favorite phrase to hear from you?",
     options: [],
     correctAnswer: "iloveyou",
-    hint: "alamin mo"
+    hint: "3 magic words."
   }
 ];
 
-const longLetterText = `NYHAHAHAHAHAH happy birthday you goblin looking human!
+const longLetterText = `NYHAHAHAHAHAHAHA happy birthday you goblin looking human!
 
 I hope you enjoy your day without me cuz u stinky! NYAHAHHAH
 
 And please be kind to others since u are an old hag now!
-
-But still thank you kasi andito ka for me so super thankful ako
-
-na ikaw partner ko and bawawl mamatay lulululululul
 
 I love you so much! That's all bleeeeepppp`;
 
@@ -111,13 +110,28 @@ I love you so much! That's all bleeeeepppp`;
 let isUnlocked = false;
 let currentQ = 0;
 let isTransitioning = false;
+let runawayTaps = 0;
 let typeWriterInterval = null;
 
+// Lock Tab Warning
 window.addEventListener('beforeunload', (e) => {
   if (!isUnlocked) {
     e.preventDefault();
     e.returnValue = "SYSTEM LOCKED: Unauthorized tab termination blocked. Please authenticate.";
     return e.returnValue;
+  }
+});
+
+// Block DevTools & Right-Click Cheating
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  alert("Nice try, IT student! No right-click inspect on your birthday! 😜");
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+    e.preventDefault();
+    alert("DevTools locked by server administrator. Play fair! 👹");
   }
 });
 
@@ -134,6 +148,9 @@ const hintBox = document.getElementById('hint-box');
 const copyBtn = document.getElementById('copy-btn');
 const restartBtn = document.getElementById('restart-btn');
 const stitchVideo = document.getElementById('stitch-video-bg');
+
+const trollModal = document.getElementById('troll-modal');
+const trollBtn = document.getElementById('troll-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
@@ -187,6 +204,7 @@ function handleAuth(e) {
 
 function renderQuestion() {
   isTransitioning = false;
+  runawayTaps = 0;
   const q = quizData[currentQ];
   
   document.body.className = `quest-mode ${q.theme}`;
@@ -221,7 +239,32 @@ function renderQuestion() {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
       btn.textContent = opt;
-      btn.onclick = () => handleChoice(btn, idx);
+
+      // Attach Runaway teleporter to the correct button
+      if (q.isRunaway && idx === q.correctIndex) {
+        btn.classList.add('runaway-btn');
+        const dodge = (e) => {
+          if (runawayTaps < 3) {
+            e.preventDefault();
+            runawayTaps++;
+            const randomX = (Math.random() - 0.5) * 180;
+            const randomY = (Math.random() - 0.5) * 120;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            document.getElementById('quiz-feedback').textContent = "Too slow! Try catching the button! 💨";
+          } else {
+            btn.style.transform = 'translate(0, 0)';
+            document.getElementById('quiz-feedback').textContent = "Okay fine, you caught it! Click it now 😂";
+          }
+        };
+        btn.addEventListener('mouseenter', dodge);
+        btn.addEventListener('touchstart', dodge, { passive: false });
+      }
+
+      btn.onclick = (e) => {
+        if (q.isRunaway && idx === q.correctIndex && runawayTaps < 3) return;
+        handleChoice(btn, idx);
+      };
+
       optContainer.appendChild(btn);
     });
   }
@@ -233,6 +276,15 @@ function handleChoice(btn, idx) {
   const feedback = document.getElementById('quiz-feedback');
 
   if (idx === q.correctIndex) {
+    if (q.hasTrollModal) {
+      // Trigger fake fatal crash modal
+      trollModal.style.display = 'flex';
+      trollBtn.onclick = () => {
+        trollModal.style.display = 'none';
+        advanceNext(btn);
+      };
+      return;
+    }
     advanceNext(btn);
   } else {
     btn.classList.add('wrong');
