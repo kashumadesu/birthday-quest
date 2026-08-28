@@ -113,22 +113,24 @@ let isTransitioning = false;
 let runawayTaps = 0;
 let typeWriterInterval = null;
 
-// Lock Tab Warning
-window.addEventListener('beforeunload', (e) => {
-  if (!isUnlocked) {
-    e.preventDefault();
-    e.returnValue = "SYSTEM LOCKED: Unauthorized tab termination blocked. Please authenticate.";
-    return e.returnValue;
-  }
-});
+// Variable to track if the quiz is fully completed
+let isQuizCompleted = false;
 
-// Block DevTools & Right-Click Cheating
+// Block DevTools & Right-Click Cheating until completed
 document.addEventListener('contextmenu', (e) => {
+  if (isQuizCompleted) return; // Allows right-click after quiz
   e.preventDefault();
   alert("Nice try, IT student! No right-click inspect on your birthday! 😜");
 });
 
 document.addEventListener('keydown', (e) => {
+  // Always allow F11 fullscreen toggle
+  if (e.key === 'F11') return;
+
+  // If completed, allow all shortcuts
+  if (isQuizCompleted) return;
+
+  // Block DevTools shortcuts while quiz is active
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
     e.preventDefault();
     alert("DevTools locked by server administrator. Play fair! 👹");
@@ -349,6 +351,9 @@ function advanceNext(targetElement) {
 }
 
 function showGrandPrize() {
+  isQuizCompleted = true; // Unlocks F11, shortcuts, minimize, and right-click
+  isUnlocked = true;      // Removes tab-close warning
+
   document.body.className = "quest-mode theme-cinnamoroll";
   document.getElementById('progress-bar').style.width = '100%';
   
@@ -403,6 +408,8 @@ function restartQuest() {
   const cursor = document.getElementById('cursor');
   if (cursor) cursor.style.display = 'inline-block';
   currentQ = 0;
+  isQuizCompleted = false; // Re-locks shortcuts if she replays
+  isUnlocked = false;
 
   document.getElementById('tab-status-title').textContent = "birthday_letter.txt • [LOCKED]";
   document.getElementById('waiting-placeholder').style.display = 'block';
@@ -417,5 +424,4 @@ function restartQuest() {
   document.getElementById('screen-warning').style.display = 'flex';
   passkeyInput.value = '';
   authFeedback.textContent = '';
-  isUnlocked = false;
 }
