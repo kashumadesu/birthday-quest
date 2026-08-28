@@ -5,19 +5,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Background Video Settings */
-.video-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: 1;
-  display: none;
-  pointer-events: none;
-}
-
 /* 1. SECURITY WARNING SCREEN */
 body.warning-mode {
   background-color: #d93025;
@@ -35,8 +22,6 @@ body.warning-mode {
   max-width: 650px;
   display: flex;
   flex-direction: column;
-  position: relative;
-  z-index: 10;
 }
 
 .warning-icon-box {
@@ -100,7 +85,7 @@ body.warning-mode {
   cursor: pointer;
 }
 
-/* 2. BACKGROUND THEMES */
+/* 2. BACKGROUND IMAGE THEMES */
 body.quest-mode {
   min-height: 100vh;
   display: flex;
@@ -117,17 +102,13 @@ body.quest-mode {
   transition: background-image 0.5s ease-in-out;
 }
 
-/* Easy: Stitch Theme */
+/* Easy: Stitch Wallpaper */
 body.theme-stitch {
-  background-image: none;
-  background-color: #0284c7;
+  background-image: url('stitch.jpg');
   color: #0c4a6e;
 }
-body.theme-stitch #stitch-video-bg {
-  display: block;
-}
 body.theme-stitch .cloud-container {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   border: 3px solid #7dd3fc;
   box-shadow: 0 20px 40px rgba(2, 132, 199, 0.35);
 }
@@ -136,13 +117,10 @@ body.theme-stitch .cute-btn {
   color: white;
 }
 
-/* Medium: Goblin Theme */
+/* Medium: Goblin Wallpaper */
 body.theme-goblin {
-  background-image: url('goblin.png');
+  background-image: url('goblin.jpg');
   color: #14532d;
-}
-body.theme-goblin #stitch-video-bg {
-  display: none;
 }
 body.theme-goblin .cloud-container {
   background: rgba(254, 252, 232, 0.92);
@@ -154,13 +132,10 @@ body.theme-goblin .cute-btn {
   color: white;
 }
 
-/* Hard & Prize: Cinnamoroll Theme */
+/* Hard & Prize: Cinnamoroll Wallpaper */
 body.theme-cinnamoroll {
   background-image: url('cinnamonroll.jpg');
   color: #3730a3;
-}
-body.theme-cinnamoroll #stitch-video-bg {
-  display: none;
 }
 body.theme-cinnamoroll .cloud-container {
   background: rgba(255, 255, 255, 0.92);

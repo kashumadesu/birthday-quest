@@ -6,7 +6,7 @@ const SECRET_PASSKEY = "goblin";
 const PASSKEY_HINT = "ACCESS DENIED: What little creature are you?";
 
 const quizData = [
-  // --- EASY (Stitch Video Theme: 1-4) ---
+  // --- EASY (Stitch Theme: 1-4) ---
   {
     difficulty: "Easy",
     theme: "theme-stitch",
@@ -129,7 +129,6 @@ const hintBox = document.getElementById('hint-box');
 
 const copyBtn = document.getElementById('copy-btn');
 const restartBtn = document.getElementById('restart-btn');
-const stitchVideo = document.getElementById('stitch-video-bg');
 
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
@@ -167,10 +166,6 @@ function handleAuth(e) {
       document.getElementById('screen-warning').style.display = 'none';
       document.getElementById('quest-container').style.display = 'block';
 
-      if (stitchVideo) {
-        stitchVideo.play().catch(() => {});
-      }
-
       renderQuestion();
     }, 1000);
   } else {
@@ -186,10 +181,6 @@ function renderQuestion() {
   const q = quizData[currentQ];
   
   document.body.className = `quest-mode ${q.theme}`;
-
-  if (q.theme === 'theme-stitch' && stitchVideo) {
-    stitchVideo.play().catch(() => {});
-  }
 
   document.getElementById('quiz-level-badge').textContent = `LEVEL ${currentQ + 1} OF ${quizData.length}`;
   document.getElementById('progress-bar').style.width = `${((currentQ) / quizData.length) * 100}%`;
