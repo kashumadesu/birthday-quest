@@ -125,11 +125,15 @@ document.addEventListener('contextmenu', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  // Always allow F11 fullscreen toggle
-  if (e.key === 'F11') return;
-
-  // If completed, allow all shortcuts
+  // If the quiz is completely finished, allow all keys and shortcuts
   if (isQuizCompleted) return;
+
+  // Block F11 Fullscreen during the quiz
+  if (e.key === 'F11') {
+    e.preventDefault();
+    alert("Fullscreen toggle is disabled until root clearance is complete! nig");
+    return;
+  }
 
   // Block DevTools shortcuts while quiz is active
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
@@ -302,32 +306,8 @@ function handleChoice(btn, idx) {
   const feedback = document.getElementById('quiz-feedback');
 
   if (idx === q.correctIndex) {
-    // Question 5: "Are You Sure?" Modal Trigger
-    if (q.hasConfirmModal) {
-      const confirmModal = document.getElementById('confirm-modal');
-      const yesBtn = document.getElementById('confirm-yes-btn');
-      const noBtn = document.getElementById('confirm-no-btn');
-
-      if (confirmModal && yesBtn && noBtn) {
-        confirmModal.style.display = 'flex';
-
-        yesBtn.onclick = () => {
-          confirmModal.style.display = 'none';
-          advanceNext(btn);
-        };
-
-        noBtn.onclick = () => {
-          confirmModal.style.display = 'none';
-          feedback.textContent = "Sabi ko na nga ba di ka sigurado eh! NYAHAHAHA 😂";
-          btn.classList.add('wrong');
-          setTimeout(() => btn.classList.remove('wrong'), 500);
-        };
-        return;
-      }
-    }
-
-    // Question 6: Fatal Crash Goblin Modal Trigger
     if (q.hasTrollModal) {
+      // Trigger fake fatal crash modal
       trollModal.style.display = 'flex';
       trollBtn.onclick = () => {
         trollModal.style.display = 'none';
@@ -335,7 +315,6 @@ function handleChoice(btn, idx) {
       };
       return;
     }
-
     advanceNext(btn);
   } else {
     btn.classList.add('wrong');
@@ -411,6 +390,14 @@ function showGrandPrize() {
   document.getElementById('letter-stream').style.display = 'block';
   document.getElementById('prize-actions').style.display = 'flex';
 
+  // Play Happy Birthday Audio
+  const audio = document.getElementById('bday-audio');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.volume = 0.7;
+    audio.play().catch(() => {});
+  }
+
   const duration = 4 * 1000;
   const end = Date.now() + duration;
   const colors = ['#f43f5e', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
@@ -459,6 +446,13 @@ function restartQuest() {
   currentQ = 0;
   isQuizCompleted = false; // Re-locks shortcuts if she replays
   isUnlocked = false;
+
+  // Stop Birthday Audio
+  const audio = document.getElementById('bday-audio');
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
 
   document.getElementById('tab-status-title').textContent = "birthday_letter.txt • [LOCKED]";
   document.getElementById('waiting-placeholder').style.display = 'block';
