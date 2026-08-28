@@ -129,6 +129,7 @@ const hintBox = document.getElementById('hint-box');
 
 const copyBtn = document.getElementById('copy-btn');
 const restartBtn = document.getElementById('restart-btn');
+const stitchVideo = document.getElementById('stitch-video-bg');
 
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
@@ -164,7 +165,11 @@ function handleAuth(e) {
       document.title = "Happy Birthday!";
 
       document.getElementById('screen-warning').style.display = 'none';
-      document.getElementById('quest-container').style.display = 'block';
+      document.getElementById('quest-container').style.display = 'grid';
+
+      if (stitchVideo) {
+        stitchVideo.play().catch(() => {});
+      }
 
       renderQuestion();
     }, 1000);
@@ -181,6 +186,10 @@ function renderQuestion() {
   const q = quizData[currentQ];
   
   document.body.className = `quest-mode ${q.theme}`;
+
+  if (q.theme === 'theme-stitch' && stitchVideo) {
+    stitchVideo.play().catch(() => {});
+  }
 
   document.getElementById('quiz-level-badge').textContent = `LEVEL ${currentQ + 1} OF ${quizData.length}`;
   document.getElementById('progress-bar').style.width = `${((currentQ) / quizData.length) * 100}%`;
@@ -269,9 +278,9 @@ function advanceNext(targetElement) {
   if (targetElement.classList) targetElement.classList.add('correct');
   
   const feedback = document.getElementById('quiz-feedback');
-  feedback.textContent = "Correct! Next level loading...";
+  feedback.textContent = "Correct! Decrypting next token...";
   
-  confetti({ particleCount: 25, spread: 60, origin: { y: 0.7 } });
+  confetti({ particleCount: 20, spread: 55, origin: { y: 0.7 } });
 
   setTimeout(() => {
     currentQ++;
@@ -280,19 +289,21 @@ function advanceNext(targetElement) {
     } else {
       showGrandPrize();
     }
-  }, 1000);
+  }, 900);
 }
 
 function showGrandPrize() {
   document.body.className = "quest-mode theme-cinnamoroll";
   document.getElementById('progress-bar').style.width = '100%';
   
-  document.getElementById('screen-quiz').style.display = 'none';
-  document.getElementById('screen-prize').style.display = 'block';
+  document.getElementById('tab-status-title').textContent = "birthday_letter.txt • [DECRYPTED 🔓]";
+  document.getElementById('waiting-placeholder').style.display = 'none';
+  document.getElementById('letter-stream').style.display = 'block';
+  document.getElementById('prize-actions').style.display = 'flex';
 
   const duration = 4 * 1000;
   const end = Date.now() + duration;
-  const colors = ['#f472b6', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
+  const colors = ['#f43f5e', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
 
   (function frame() {
     confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
@@ -300,7 +311,7 @@ function showGrandPrize() {
     if (Date.now() < end) requestAnimationFrame(frame);
   })();
 
-  startTypewriter(longLetterText, 'typed-message', 30);
+  startTypewriter(longLetterText, 'typed-message', 25);
 }
 
 function startTypewriter(text, elId, speed) {
@@ -313,7 +324,7 @@ function startTypewriter(text, elId, speed) {
     if (i < text.length) {
       el.textContent += text.charAt(i);
       i++;
-      const container = document.querySelector('.letter-card');
+      const container = document.querySelector('.letter-terminal-content');
       if (container) container.scrollTop = container.scrollHeight;
     } else {
       clearInterval(typeWriterInterval);
@@ -337,14 +348,17 @@ function restartQuest() {
   if (cursor) cursor.style.display = 'inline-block';
   currentQ = 0;
 
-  document.getElementById('screen-prize').style.display = 'none';
+  document.getElementById('tab-status-title').textContent = "birthday_letter.txt • [LOCKED]";
+  document.getElementById('waiting-placeholder').style.display = 'block';
+  document.getElementById('letter-stream').style.display = 'none';
+  document.getElementById('prize-actions').style.display = 'none';
+  document.getElementById('typed-message').textContent = '';
+
   document.getElementById('quest-container').style.display = 'none';
-  
   document.body.className = "warning-mode";
   document.title = "Security Warning: Critical Risk Detected";
   
   document.getElementById('screen-warning').style.display = 'flex';
-  document.getElementById('screen-quiz').style.display = 'block';
   passkeyInput.value = '';
   authFeedback.textContent = '';
   isUnlocked = false;
