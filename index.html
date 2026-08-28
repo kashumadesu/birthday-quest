@@ -5,18 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Security Warning: Critical Risk Detected</title>
 
-  <!-- Google Fonts & Canvas Confetti CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Nunito:wght@400;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Linked CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="warning-mode">
 
-  <!-- ================= 1. DANGEROUS WARNING SCREEN ================= -->
+  <div class="cloud-bg" id="cloud-bg">
+    <div class="floating-item item-1"></div>
+    <div class="floating-item item-2"></div>
+    <div class="floating-item item-3"></div>
+    <div class="floating-item item-4"></div>
+  </div>
+
   <div id="screen-warning" class="warning-wrapper active">
     <div class="warning-icon-box">
       <svg viewBox="0 0 24 24" class="warning-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +35,6 @@
       System administrators on <strong>staging-protocol.internal</strong> have locked this environment. Security parameters indicate an unauthorized birthday girl trying to bypass root clearance. All tab navigation has been suspended.
     </p>
 
-    <!-- Hidden override form -->
     <div class="override-panel">
       <p class="override-label">Enter root override passkey to lift protocol quarantine:</p>
       <form id="password-form" class="warning-form">
@@ -45,14 +48,14 @@
     </div>
   </div>
 
-  <!-- ================= ROMANTIC QUEST CONTAINER ================= -->
-  <div class="container" id="quest-container" style="display: none;">
+  <div class="cloud-container" id="quest-container" style="display: none;">
     
-    <!-- 2. 10-QUESTION QUIZ SCREEN -->
     <div id="screen-quiz" class="screen">
+      <div class="character-mascot" id="mascot-emoji">🌺</div>
+      
       <div class="badge-bar">
-        <span class="badge" id="quiz-level-badge">LEVEL 1 OF 10</span>
-        <span class="difficulty-tag diff-easy" id="quiz-diff-tag">EASY</span>
+        <span class="cute-badge" id="quiz-level-badge">LEVEL 1 OF 10</span>
+        <span class="theme-tag" id="theme-tag">STITCH MODE 💙</span>
       </div>
 
       <div class="progress-track">
@@ -61,53 +64,50 @@
 
       <h2 class="question-title" id="question-text">Loading question...</h2>
 
-      <!-- Multiple choice container (Questions 1-7) -->
       <div class="options-grid" id="options-container"></div>
 
-      <!-- Identification input container (Questions 8-10) -->
       <div id="ident-container" style="display: none; margin-top: 1rem;">
         <form id="ident-form">
           <div class="input-group">
-            <input type="text" id="ident-input" placeholder="Type your answer..." autocomplete="off" />
-            <button type="submit" class="btn">Submit Answer ✨</button>
+            <input type="text" id="ident-input" placeholder="Type your answer here, sweetie..." autocomplete="off" />
+            <button type="submit" class="cute-btn">Submit Answer ✨</button>
           </div>
         </form>
-        <span class="hint-toggle" id="hint-toggle-btn">Need a hint? 💡</span>
+        <span class="hint-toggle" id="hint-toggle-btn">Need a little hint? 💡</span>
         <div class="hint-box" id="hint-box"></div>
       </div>
 
       <p class="feedback-msg" id="quiz-feedback"></p>
     </div>
 
-    <!-- 3. GRAND PRIZE / LETTER SCREEN -->
     <div id="screen-prize" class="screen" style="text-align: center;">
+      <div class="character-mascot">🎂✨</div>
       <div class="badge-bar" style="justify-content: center;">
-        <span class="badge badge-success">
-          🔓 ACCESS GRANTED: SYSTEM DECRYPTED
+        <span class="cute-badge" style="background: rgba(255,255,255,0.85); color: #ec4899;">
+          💌 SPECIAL DELIVERY UNLOCKED
         </span>
       </div>
-      <h1 class="prize-heading">Happy Birthday, Love! 🎂</h1>
+      <h1 class="prize-heading">Happy Birthday, My Favorite Human! 🍰</h1>
       
       <div class="terminal-box">
         <div class="terminal-header">
           <span class="dot dot-red"></span>
           <span class="dot dot-yellow"></span>
           <span class="dot dot-green"></span>
-          <span class="terminal-file-tag">decrypted_letter.txt</span>
+          <span class="terminal-file-tag">for_my_girl.txt 🎀</span>
         </div>
         <span id="typed-message"></span><span class="cursor" id="cursor"></span>
       </div>
 
       <div class="action-row">
-        <button class="btn btn-secondary" id="copy-btn">📋 Copy Letter</button>
-        <button class="btn" id="restart-btn">🔄 Replay Quiz</button>
+        <button class="cute-btn btn-secondary" id="copy-btn">📋 Copy Letter</button>
+        <button class="cute-btn" id="restart-btn">🔄 Replay Quest</button>
       </div>
       <p class="feedback-msg" id="prize-feedback" style="min-height: 1rem;"></p>
     </div>
 
   </div>
 
-  <!-- Linked JS -->
   <script src="script.js"></script>
 </body>
 </html>

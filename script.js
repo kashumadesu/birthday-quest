@@ -2,13 +2,16 @@
    CUSTOM CONFIGURATION
    ================================================================= */
 
-const SECRET_PASSKEY = "goblin"; // The password requested
-const PASSKEY_HINT = "⚠️ ACCESS DENIED: Incorrect passkey. Hint: What creature are you? 👹";
+const SECRET_PASSKEY = "goblin";
+const PASSKEY_HINT = "⚠️ ACCESS DENIED: What little creature are you? 👹";
 
 const quizData = [
-  // --- EASY (Multiple Choice: 1-4) ---
+  // --- EASY (Stitch Tropical Blue Theme: 1-4) ---
   {
     difficulty: "Easy",
+    theme: "theme-stitch",
+    mascot: "🌺 Stitch 💙",
+    themeLabel: "STITCH VIBES 🌴",
     question: "1. Let's start easy: Where did we have our very first official date?",
     options: ["That cozy cafe down the street", "At the cinema eating popcorn", "Over a 6-hour Discord study call", "A fast-food drive-thru run"],
     correctIndex: 0,
@@ -16,6 +19,9 @@ const quizData = [
   },
   {
     difficulty: "Easy",
+    theme: "theme-stitch",
+    mascot: "🌺 Stitch 💙",
+    themeLabel: "STITCH VIBES 🌴",
     question: "2. Who is more likely to fall asleep first on late-night calls?",
     options: ["You, without even saying goodbye", "Me, while promising I'm wide awake", "We both stay awake like owls", "Discord crashes before anyone sleeps"],
     correctIndex: 1,
@@ -23,6 +29,9 @@ const quizData = [
   },
   {
     difficulty: "Easy",
+    theme: "theme-stitch",
+    mascot: "🌺 Stitch 💙",
+    themeLabel: "STITCH VIBES 🌴",
     question: "3. What is our ultimate comfort food order when we can't decide?",
     options: ["Korean Fried Chicken & Fries", "Matcha Milk Tea (100% sugar)", "Pizza with stuffed crust", "A massive burger meal"],
     correctIndex: 0,
@@ -30,15 +39,21 @@ const quizData = [
   },
   {
     difficulty: "Easy",
+    theme: "theme-stitch",
+    mascot: "🌺 Stitch 💙",
+    themeLabel: "STITCH VIBES 🌴",
     question: "4. What is my favorite thing to do whenever we hang out?",
     options: ["Watch you talk passionately about your hobbies", "Just sit in comfortable silence with you", "Steal your food right after you order", "All of the above ❤️"],
     correctIndex: 3,
     hint: "There is no wrong way to love spending time with you."
   },
 
-  // --- MEDIUM (Multiple Choice: 5-7) ---
+  // --- MEDIUM (Goblin Clash of Clans Gold/Green Theme: 5-7) ---
   {
     difficulty: "Medium",
+    theme: "theme-goblin",
+    mascot: "🪙 Goblin ⚔️",
+    themeLabel: "CLASH GOBLIN 💚",
     question: "5. In our IT coding sprints, what is our most frequent 'debugging technique'?",
     options: ["Reading the official docs meticulously", "Console.log('why is this not working???')", "Deleting the repository entirely", "Asking ChatGPT to rewrite our lives"],
     correctIndex: 1,
@@ -46,6 +61,9 @@ const quizData = [
   },
   {
     difficulty: "Medium",
+    theme: "theme-goblin",
+    mascot: "🪙 Goblin ⚔️",
+    themeLabel: "CLASH GOBLIN 💚",
     question: "6. Which inside joke always makes us burst out laughing immediately?",
     options: ["The accidental mic unmute incident", "The recursive loop meme we sent at 3 AM", "That time we tried to follow GPS blindly", "The dramatic typo during serious texting"],
     correctIndex: 0,
@@ -53,15 +71,21 @@ const quizData = [
   },
   {
     difficulty: "Medium",
+    theme: "theme-goblin",
+    mascot: "🪙 Goblin ⚔️",
+    themeLabel: "CLASH GOBLIN 💚",
     question: "7. What was the exact vibe of our very first conversation?",
     options: ["Super awkward and overly formal", "Instant connection like we knew each other for years", "A debate about JavaScript vs. Python", "Just sharing study notes"],
     correctIndex: 1,
     hint: "Time flew by so fast that night!"
   },
 
-  // --- HARD (Identification: 8-10) ---
+  // --- HARD (Cinnamoroll Pastel Theme: 8-10) ---
   {
     difficulty: "Hard",
+    theme: "theme-cinnamoroll",
+    mascot: "☁️ Cinnamoroll 🎀",
+    themeLabel: "CINNAMOROLL ☁️",
     question: "8. Identification: What is the title of 'our' favorite song or playlist theme?",
     options: [],
     correctAnswer: "lover",
@@ -69,6 +93,9 @@ const quizData = [
   },
   {
     difficulty: "Hard",
+    theme: "theme-cinnamoroll",
+    mascot: "☁️ Cinnamoroll 🎀",
+    themeLabel: "CINNAMOROLL ☁️",
     question: "9. Identification: What is the specific pet name or nickname I call you the most?",
     options: [],
     correctAnswer: "baby",
@@ -76,6 +103,9 @@ const quizData = [
   },
   {
     difficulty: "Hard",
+    theme: "theme-cinnamoroll",
+    mascot: "☁️ Cinnamoroll 🎀",
+    themeLabel: "CINNAMOROLL ☁️",
     question: "10. Final Verification: Who holds the master root key to my heart?",
     options: [],
     correctAnswer: "you",
@@ -99,14 +129,14 @@ Forever your player two,
 With all my love ❤️`;
 
 /* =================================================================
-   TAB LOCK PROTOCOL & STATE
+   STATE & LOGIC CONTROLLER
    ================================================================= */
 let isUnlocked = false;
 let currentQ = 0;
 let isTransitioning = false;
 let typeWriterInterval = null;
 
-// Lock Tab Warning: Intercepts closing/refreshing tab
+// Tab Lock Protocol
 window.addEventListener('beforeunload', (e) => {
   if (!isUnlocked) {
     e.preventDefault();
@@ -115,7 +145,6 @@ window.addEventListener('beforeunload', (e) => {
   }
 });
 
-// DOM Elements
 const passwordForm = document.getElementById('password-form');
 const passkeyInput = document.getElementById('passkey-input');
 const authFeedback = document.getElementById('auth-feedback');
@@ -132,7 +161,7 @@ const restartBtn = document.getElementById('restart-btn');
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
   fakeSafetyBtn.addEventListener('click', () => {
-    authFeedback.style.color = '#ffe4e6';
+    authFeedback.style.color = '#fff';
     authFeedback.textContent = "⚠️ There is no going back. Enter the password to escape.";
   });
 
@@ -146,30 +175,25 @@ function cleanStr(str) {
   return str.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
 }
 
-// Password Authenticator (from Chrome Warning Screen -> Quiz Screen)
+// Authentication Transition
 function handleAuth(e) {
   e.preventDefault();
   const val = cleanStr(passkeyInput.value);
 
   if (val === cleanStr(SECRET_PASSKEY)) {
-    isUnlocked = true; // lifts the hard lockdown
+    isUnlocked = true;
     authFeedback.style.color = '#a7f3d0';
-    authFeedback.textContent = 'Quarantine Lifted. Initializing Birthday Quest...';
+    authFeedback.textContent = 'Quarantine Lifted. Unlocking Cute Mode... ✨';
     
     confetti({ particleCount: 35, spread: 70, origin: { y: 0.6 } });
 
     setTimeout(() => {
-      // Transition out of Chrome Red theme into romantic dark theme
       document.body.classList.remove('warning-mode');
       document.body.classList.add('quest-mode');
-      document.title = "Happy Birthday! ❤️";
+      document.title = "Happy Birthday! 🎂❤️";
 
       document.getElementById('screen-warning').style.display = 'none';
       document.getElementById('quest-container').style.display = 'block';
-      
-      const quizScreen = document.getElementById('screen-quiz');
-      quizScreen.style.display = 'block';
-      setTimeout(() => quizScreen.classList.add('active'), 20);
 
       renderQuestion();
     }, 1000);
@@ -181,17 +205,19 @@ function handleAuth(e) {
   }
 }
 
-// Render Questions
+// Render dynamic theme per difficulty level
 function renderQuestion() {
   isTransitioning = false;
   const q = quizData[currentQ];
   
+  // Set Body Theme
+  document.body.className = `quest-mode ${q.theme}`;
+
+  // Mascot & Header Tags
+  document.getElementById('mascot-emoji').textContent = q.mascot;
+  document.getElementById('theme-tag').textContent = q.themeLabel;
   document.getElementById('quiz-level-badge').textContent = `LEVEL ${currentQ + 1} OF ${quizData.length}`;
   document.getElementById('progress-bar').style.width = `${((currentQ) / quizData.length) * 100}%`;
-  
-  const diffTag = document.getElementById('quiz-diff-tag');
-  diffTag.textContent = q.difficulty;
-  diffTag.className = 'difficulty-tag ' + (q.difficulty === 'Easy' ? 'diff-easy' : q.difficulty === 'Medium' ? 'diff-medium' : 'diff-hard');
 
   document.getElementById('question-text').textContent = q.question;
   document.getElementById('quiz-feedback').textContent = '';
@@ -215,7 +241,7 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
-      btn.innerHTML = `<span>${opt}</span><span>→</span>`;
+      btn.innerHTML = `<span>${opt}</span><span>✨</span>`;
       btn.onclick = () => handleChoice(btn, idx);
       optContainer.appendChild(btn);
     });
@@ -231,7 +257,7 @@ function handleChoice(btn, idx) {
     advanceNext(btn);
   } else {
     btn.classList.add('wrong');
-    feedback.textContent = q.hint || "Not quite, try another option! 💡";
+    feedback.textContent = q.hint || "Oopsie! Try another one! 💡";
     setTimeout(() => btn.classList.remove('wrong'), 500);
   }
 }
@@ -253,7 +279,7 @@ function handleIdentSubmit(e) {
     advanceNext(identInput);
   } else {
     identInput.classList.add('input-error');
-    feedback.textContent = q.hint || "Almost! Check your spelling or click the hint above.";
+    feedback.textContent = q.hint || "Almost there! Click the hint if you need help!";
     setTimeout(() => identInput.classList.remove('input-error'), 400);
   }
 }
@@ -267,10 +293,9 @@ function advanceNext(targetElement) {
   if (targetElement.classList) targetElement.classList.add('correct');
   
   const feedback = document.getElementById('quiz-feedback');
-  feedback.style.color = '#34d399';
-  feedback.textContent = "Passed! Loading next block... ✨";
+  feedback.textContent = "Yay! Correct! 🌟 Next level loading...";
   
-  confetti({ particleCount: 20, spread: 50, origin: { y: 0.7 } });
+  confetti({ particleCount: 25, spread: 60, origin: { y: 0.7 } });
 
   setTimeout(() => {
     currentQ++;
@@ -283,21 +308,16 @@ function advanceNext(targetElement) {
 }
 
 function showGrandPrize() {
+  document.body.className = "quest-mode theme-cinnamoroll";
   document.getElementById('progress-bar').style.width = '100%';
   
-  const quizScreen = document.getElementById('screen-quiz');
-  const prizeScreen = document.getElementById('screen-prize');
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('screen-prize').style.display = 'block';
 
-  quizScreen.classList.remove('active');
-  setTimeout(() => {
-    quizScreen.style.display = 'none';
-    prizeScreen.style.display = 'block';
-    setTimeout(() => prizeScreen.classList.add('active'), 20);
-  }, 350);
-
-  const duration = 3.5 * 1000;
+  // Confetti Explosion
+  const duration = 4 * 1000;
   const end = Date.now() + duration;
-  const colors = ['#f43f5e', '#ec4899', '#fda4af', '#ffffff', '#a855f7'];
+  const colors = ['#f472b6', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
 
   (function frame() {
     confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
@@ -330,8 +350,7 @@ function startTypewriter(text, elId, speed) {
 function copyLetter() {
   navigator.clipboard.writeText(longLetterText).then(() => {
     const feedback = document.getElementById('prize-feedback');
-    feedback.style.color = '#34d399';
-    feedback.textContent = 'Letter copied to clipboard! 📋';
+    feedback.textContent = 'Letter copied to clipboard! 📋🎀';
     setTimeout(() => feedback.textContent = '', 3000);
   });
 }
@@ -341,19 +360,15 @@ function restartQuest() {
   document.getElementById('cursor').style.display = 'inline-block';
   currentQ = 0;
 
-  const prizeScreen = document.getElementById('screen-prize');
-  prizeScreen.classList.remove('active');
+  document.getElementById('screen-prize').style.display = 'none';
+  document.getElementById('quest-container').style.display = 'none';
   
-  setTimeout(() => {
-    prizeScreen.style.display = 'none';
-    document.getElementById('quest-container').style.display = 'none';
-    document.body.classList.remove('quest-mode');
-    document.body.classList.add('warning-mode');
-    document.title = "Security Warning: Critical Risk Detected";
-    
-    document.getElementById('screen-warning').style.display = 'flex';
-    passkeyInput.value = '';
-    authFeedback.textContent = '';
-    isUnlocked = false;
-  }, 350);
+  document.body.className = "warning-mode";
+  document.title = "Security Warning: Critical Risk Detected";
+  
+  document.getElementById('screen-warning').style.display = 'flex';
+  document.getElementById('screen-quiz').style.display = 'block';
+  passkeyInput.value = '';
+  authFeedback.textContent = '';
+  isUnlocked = false;
 }
