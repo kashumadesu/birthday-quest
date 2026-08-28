@@ -42,12 +42,13 @@ const quizData = [
   },
 
   // --- MEDIUM (Goblin Theme: 5-7) ---
-  {
+{
     difficulty: "Medium",
     theme: "theme-goblin",
     question: "5. Where did it all begin?",
     options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
     correctIndex: 0,
+    hasConfirmModal: true, // Triggers "Are you sure?" modal
     hint: "FROGSSSS everywhere"
   },
   {
@@ -301,8 +302,32 @@ function handleChoice(btn, idx) {
   const feedback = document.getElementById('quiz-feedback');
 
   if (idx === q.correctIndex) {
+    // Question 5: "Are You Sure?" Modal Trigger
+    if (q.hasConfirmModal) {
+      const confirmModal = document.getElementById('confirm-modal');
+      const yesBtn = document.getElementById('confirm-yes-btn');
+      const noBtn = document.getElementById('confirm-no-btn');
+
+      if (confirmModal && yesBtn && noBtn) {
+        confirmModal.style.display = 'flex';
+
+        yesBtn.onclick = () => {
+          confirmModal.style.display = 'none';
+          advanceNext(btn);
+        };
+
+        noBtn.onclick = () => {
+          confirmModal.style.display = 'none';
+          feedback.textContent = "Sabi ko na nga ba di ka sigurado eh! NYAHAHAHA 😂";
+          btn.classList.add('wrong');
+          setTimeout(() => btn.classList.remove('wrong'), 500);
+        };
+        return;
+      }
+    }
+
+    // Question 6: Fatal Crash Goblin Modal Trigger
     if (q.hasTrollModal) {
-      // Trigger fake fatal crash modal
       trollModal.style.display = 'flex';
       trollBtn.onclick = () => {
         trollModal.style.display = 'none';
@@ -310,6 +335,7 @@ function handleChoice(btn, idx) {
       };
       return;
     }
+
     advanceNext(btn);
   } else {
     btn.classList.add('wrong');
