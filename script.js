@@ -13,7 +13,7 @@ const quizData = [
     question: "1. When is our official anniversary date?",
     options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "kinabukasan iniwan mo na ko"
+    hint: "kinabukasan iniwan mo na ko" 
   },
   {
     difficulty: "Easy",
