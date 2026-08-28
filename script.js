@@ -121,24 +121,26 @@ let isQuizCompleted = false;
 document.addEventListener('contextmenu', (e) => {
   if (isQuizCompleted) return; // Allows right-click after quiz
   e.preventDefault();
-  alert("Nice try, IT student! No right-click inspect on your birthday! 😜");
+  alert("Nice try goblin, No right-click inspect on your birthday! blep");
 });
 
 document.addEventListener('keydown', (e) => {
   // If the quiz is completely finished, allow all keys and shortcuts
   if (isQuizCompleted) return;
 
-  // Block F11 Fullscreen during the quiz
+  // Block F11 Fullscreen toggle during the quiz
   if (e.key === 'F11') {
     e.preventDefault();
-    alert("Fullscreen toggle is disabled until root clearance is complete! nig");
+    if (!document.fullscreenElement) {
+      enterFullscreen();
+    }
     return;
   }
 
   // Block DevTools shortcuts while quiz is active
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
     e.preventDefault();
-    alert("DevTools locked by server administrator. Play fair! 👹");
+    alert("DevTools locked by server administrator. Play fair! ");
   }
 });
 
@@ -183,8 +185,11 @@ function handleAuth(e) {
   if (val === cleanStr(SECRET_PASSKEY)) {
     isUnlocked = true;
     authFeedback.style.color = '#a7f3d0';
-    authFeedback.textContent = 'Quarantine Lifted. Unlocking Birthday Quest...';
+    authFeedback.textContent = 'Quarantine Lifted. Initializing Fullscreen Lockdown...';
     
+    // Auto trigger fullscreen on user submit gesture
+    enterFullscreen();
+
     confetti({ particleCount: 35, spread: 70, origin: { y: 0.6 } });
 
     setTimeout(() => {
@@ -440,6 +445,8 @@ function copyLetter() {
 }
 
 function restartQuest() {
+  exitFullscreen();
+
   if (typeWriterInterval) clearInterval(typeWriterInterval);
   const cursor = document.getElementById('cursor');
   if (cursor) cursor.style.display = 'inline-block';
@@ -468,3 +475,36 @@ function restartQuest() {
   passkeyInput.value = '';
   authFeedback.textContent = '';
 }
+
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen().catch(() => {});
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen && document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+  } else if (document.webkitExitFullscreen && document.webkitFullscreenElement) {
+    document.webkitExitFullscreen();
+  }
+}
+
+// Re-enforce fullscreen if she presses Esc during the active quiz
+document.addEventListener('fullscreenchange', () => {
+  if (!isQuizCompleted && isUnlocked && !document.fullscreenElement) {
+    // Attempt re-entry on any subsequent click
+    const reLock = () => {
+      if (!isQuizCompleted && isUnlocked) {
+        enterFullscreen();
+      }
+      document.removeEventListener('click', reLock);
+    };
+    document.addEventListener('click', reLock);
+  }
+});
