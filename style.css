@@ -118,11 +118,11 @@ body.quest-mode {
 }
 
 /* Easy: Stitch Theme */
-body.theme-goblin {
+body.theme-stitch {
   background-image: url('stitch.jpg');
   color: #1b57c5;
 }
-body.theme-goblin #stitch-video-bg {
+body.theme-stitch #stitch-video-bg {
   display: none;
 }
 
