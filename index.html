@@ -3,38 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Protocol: Birthday Quest ❤️</title>
+  <title>Security Warning: Critical Risk Detected</title>
 
   <!-- Google Fonts & Canvas Confetti CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Linked CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="warning-mode">
 
-  <div class="container">
-    
-    <!-- 1. WELCOME / PASSWORD SCREEN -->
-    <div id="screen-welcome" class="screen active">
-      <div class="badge-bar">
-        <span class="badge">🔒 AUTH_REQUIRED</span>
-      </div>
-      <h1>Access Protocol: Birthday Edition ❤️</h1>
-      <p class="subtitle">A secure verification test has been initialized. Enter your custom security passkey to unlock the quest.</p>
-      
-      <form id="password-form">
-        <div class="input-group">
-          <input type="password" id="passkey-input" placeholder="Enter passkey here..." autocomplete="off" />
-          <button type="submit" class="btn">Unlock Quest 🚀</button>
+  <!-- ================= 1. DANGEROUS WARNING SCREEN ================= -->
+  <div id="screen-warning" class="warning-wrapper active">
+    <div class="warning-icon-box">
+      <svg viewBox="0 0 24 24" class="warning-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L1 21H23L12 2Z" fill="white"/>
+        <path d="M12 9V14" stroke="#d32f2f" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="12" cy="17.5" r="1.2" fill="#d32f2f"/>
+      </svg>
+    </div>
+
+    <h1 class="warning-title">Deceptive site ahead</h1>
+    <p class="warning-desc">
+      System administrators on <strong>staging-protocol.internal</strong> have locked this environment. Security parameters indicate an unauthorized birthday girl trying to bypass root clearance. All tab navigation has been suspended.
+    </p>
+
+    <!-- Hidden override form -->
+    <div class="override-panel">
+      <p class="override-label">Enter root override passkey to lift protocol quarantine:</p>
+      <form id="password-form" class="warning-form">
+        <input type="password" id="passkey-input" placeholder="Type authorization passkey..." autocomplete="off" />
+        <div class="warning-actions">
+          <button type="button" class="btn-fake-safety" id="fake-safety-btn">Back to safety</button>
+          <button type="submit" class="btn-override">Override & Continue</button>
         </div>
       </form>
       <p class="feedback-msg" id="auth-feedback"></p>
     </div>
+  </div>
 
+  <!-- ================= ROMANTIC QUEST CONTAINER ================= -->
+  <div class="container" id="quest-container" style="display: none;">
+    
     <!-- 2. 10-QUESTION QUIZ SCREEN -->
     <div id="screen-quiz" class="screen">
       <div class="badge-bar">

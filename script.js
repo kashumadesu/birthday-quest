@@ -1,9 +1,9 @@
 /* =================================================================
-   CUSTOM CONFIGURATION: PASSKEY, QUIZ QUESTIONS & LETTER
+   CUSTOM CONFIGURATION
    ================================================================= */
 
-const SECRET_PASSKEY = "birthdayGirl"; // Case-insensitive, spaces ignored
-const PASSKEY_HINT = "Hint: Try our special nickname or anniversary code! ✨";
+const SECRET_PASSKEY = "goblin"; // The password requested
+const PASSKEY_HINT = "⚠️ ACCESS DENIED: Incorrect passkey. Hint: What creature are you? 👹";
 
 const quizData = [
   // --- EASY (Multiple Choice: 1-4) ---
@@ -98,19 +98,28 @@ I love you more than words, syntax, or code can compile.
 Forever your player two,
 With all my love ❤️`;
 
-
 /* =================================================================
-   STATE MANAGEMENT & DOM LISTENERS
+   TAB LOCK PROTOCOL & STATE
    ================================================================= */
-
+let isUnlocked = false;
 let currentQ = 0;
 let isTransitioning = false;
 let typeWriterInterval = null;
+
+// Lock Tab Warning: Intercepts closing/refreshing tab
+window.addEventListener('beforeunload', (e) => {
+  if (!isUnlocked) {
+    e.preventDefault();
+    e.returnValue = "SYSTEM LOCKED: Unauthorized tab termination blocked. Please authenticate.";
+    return e.returnValue;
+  }
+});
 
 // DOM Elements
 const passwordForm = document.getElementById('password-form');
 const passkeyInput = document.getElementById('passkey-input');
 const authFeedback = document.getElementById('auth-feedback');
+const fakeSafetyBtn = document.getElementById('fake-safety-btn');
 
 const identForm = document.getElementById('ident-form');
 const identInput = document.getElementById('ident-input');
@@ -120,57 +129,59 @@ const hintBox = document.getElementById('hint-box');
 const copyBtn = document.getElementById('copy-btn');
 const restartBtn = document.getElementById('restart-btn');
 
-// Initialize event listeners
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
+  fakeSafetyBtn.addEventListener('click', () => {
+    authFeedback.style.color = '#ffe4e6';
+    authFeedback.textContent = "⚠️ There is no going back. Enter the password to escape.";
+  });
+
   identForm.addEventListener('submit', handleIdentSubmit);
   hintToggleBtn.addEventListener('click', toggleHint);
   copyBtn.addEventListener('click', copyLetter);
   restartBtn.addEventListener('click', restartQuest);
 });
 
-// String cleaner helper
 function cleanStr(str) {
   return str.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
 }
 
-// Smooth Screen Transition
-function switchScreen(fromId, toId) {
-  const fromEl = document.getElementById(fromId);
-  const toEl = document.getElementById(toId);
-  
-  fromEl.classList.remove('active');
-  setTimeout(() => {
-    fromEl.style.display = 'none';
-    toEl.style.display = 'block';
-    setTimeout(() => toEl.classList.add('active'), 20);
-  }, 350);
-}
-
-// Screen 1: Password Authenticator
+// Password Authenticator (from Chrome Warning Screen -> Quiz Screen)
 function handleAuth(e) {
   e.preventDefault();
   const val = cleanStr(passkeyInput.value);
 
   if (val === cleanStr(SECRET_PASSKEY)) {
-    authFeedback.style.color = 'var(--success)';
-    authFeedback.textContent = 'Passkey Verified! Decrypting Quest...';
+    isUnlocked = true; // lifts the hard lockdown
+    authFeedback.style.color = '#a7f3d0';
+    authFeedback.textContent = 'Quarantine Lifted. Initializing Birthday Quest...';
     
-    confetti({ particleCount: 30, spread: 60, origin: { y: 0.6 } });
+    confetti({ particleCount: 35, spread: 70, origin: { y: 0.6 } });
 
     setTimeout(() => {
-      switchScreen('screen-welcome', 'screen-quiz');
+      // Transition out of Chrome Red theme into romantic dark theme
+      document.body.classList.remove('warning-mode');
+      document.body.classList.add('quest-mode');
+      document.title = "Happy Birthday! ❤️";
+
+      document.getElementById('screen-warning').style.display = 'none';
+      document.getElementById('quest-container').style.display = 'block';
+      
+      const quizScreen = document.getElementById('screen-quiz');
+      quizScreen.style.display = 'block';
+      setTimeout(() => quizScreen.classList.add('active'), 20);
+
       renderQuestion();
-    }, 900);
+    }, 1000);
   } else {
     passkeyInput.classList.add('input-error');
-    authFeedback.style.color = 'var(--error)';
+    authFeedback.style.color = '#fff';
     authFeedback.textContent = PASSKEY_HINT;
     setTimeout(() => passkeyInput.classList.remove('input-error'), 400);
   }
 }
 
-// Screen 2: Render Current Question
+// Render Questions
 function renderQuestion() {
   isTransitioning = false;
   const q = quizData[currentQ];
@@ -211,7 +222,6 @@ function renderQuestion() {
   }
 }
 
-// Handle Multiple Choice Selection
 function handleChoice(btn, idx) {
   if (isTransitioning) return;
   const q = quizData[currentQ];
@@ -226,7 +236,6 @@ function handleChoice(btn, idx) {
   }
 }
 
-// Handle Identification Submission
 function handleIdentSubmit(e) {
   e.preventDefault();
   if (isTransitioning) return;
@@ -273,34 +282,27 @@ function advanceNext(targetElement) {
   }, 1000);
 }
 
-// Screen 3: Grand Prize Display
 function showGrandPrize() {
   document.getElementById('progress-bar').style.width = '100%';
-  switchScreen('screen-quiz', 'screen-prize');
+  
+  const quizScreen = document.getElementById('screen-quiz');
+  const prizeScreen = document.getElementById('screen-prize');
+
+  quizScreen.classList.remove('active');
+  setTimeout(() => {
+    quizScreen.style.display = 'none';
+    prizeScreen.style.display = 'block';
+    setTimeout(() => prizeScreen.classList.add('active'), 20);
+  }, 350);
 
   const duration = 3.5 * 1000;
   const end = Date.now() + duration;
   const colors = ['#f43f5e', '#ec4899', '#fda4af', '#ffffff', '#a855f7'];
 
   (function frame() {
-    confetti({
-      particleCount: 3,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 },
-      colors: colors
-    });
-    confetti({
-      particleCount: 3,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1 },
-      colors: colors
-    });
-
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
+    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+    if (Date.now() < end) requestAnimationFrame(frame);
   })();
 
   startTypewriter(longLetterText, 'typed-message', 25);
@@ -338,7 +340,20 @@ function restartQuest() {
   if (typeWriterInterval) clearInterval(typeWriterInterval);
   document.getElementById('cursor').style.display = 'inline-block';
   currentQ = 0;
-  switchScreen('screen-prize', 'screen-welcome');
-  passkeyInput.value = '';
-  authFeedback.textContent = '';
+
+  const prizeScreen = document.getElementById('screen-prize');
+  prizeScreen.classList.remove('active');
+  
+  setTimeout(() => {
+    prizeScreen.style.display = 'none';
+    document.getElementById('quest-container').style.display = 'none';
+    document.body.classList.remove('quest-mode');
+    document.body.classList.add('warning-mode');
+    document.title = "Security Warning: Critical Risk Detected";
+    
+    document.getElementById('screen-warning').style.display = 'flex';
+    passkeyInput.value = '';
+    authFeedback.textContent = '';
+    isUnlocked = false;
+  }, 350);
 }
