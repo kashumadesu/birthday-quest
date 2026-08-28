@@ -1,127 +1,105 @@
 /* =================================================================
-   CUSTOM CONFIGURATION: QUESTIONS & BIRTHDAY MESSAGE
+   CUSTOM CONFIGURATION
    ================================================================= */
 
 const SECRET_PASSKEY = "goblin";
-const PASSKEY_HINT = "⚠️ ACCESS DENIED: What little creature are you? 👹";
+const PASSKEY_HINT = "ACCESS DENIED: What little creature are you?";
 
 const quizData = [
-  // --- EASY (Stitch Tropical Blue Theme: 1-4) ---
+  // --- EASY (Stitch Video Theme: 1-4) ---
   {
     difficulty: "Easy",
     theme: "theme-stitch",
-    mascot: "🌺 Stitch 💙",
-    themeLabel: "STITCH VIBES 🌴",
     question: "1. When is our official anniversary date?",
     options: ["July 28, 2023", "June 28, 2023", "August 28, 2023", "July 18, 2023"],
     correctIndex: 0,
-    hint: "Think back to the best day in July 2023! ❤️"
+    hint: "Think back to the best day in July 2023."
   },
   {
     difficulty: "Easy",
     theme: "theme-stitch",
-    mascot: "🌺 Stitch 💙",
-    themeLabel: "STITCH VIBES 🌴",
     question: "2. What is the name of our child on TikTok?",
     options: ["Siomai", "Paotsin", "Dimsum", "Kwek-kwek"],
     correctIndex: 1,
-    hint: "It sounds like a legendary food stall! 🥟"
+    hint: "It sounds like a popular food stall."
   },
   {
     difficulty: "Easy",
     theme: "theme-stitch",
-    mascot: "🌺 Stitch 💙",
-    themeLabel: "STITCH VIBES 🌴",
     question: "3. What was the very first nickname I ever gave you?",
     options: ["Baby", "Koy", "Goblin", "Love"],
     correctIndex: 1,
-    hint: "Just 3 letters, super classic! 😉"
+    hint: "Just 3 letters, super classic."
   },
   {
     difficulty: "Easy",
     theme: "theme-stitch",
-    mascot: "🌺 Stitch 💙",
-    themeLabel: "STITCH VIBES 🌴",
     question: "4. What's the best song that can describe us?",
     options: ["I Like Me Better", "Lover", "Until I Found You", "Die With A Smile"],
     correctIndex: 0,
-    hint: "'I like me better when I'm with you...' 🎵✨"
+    hint: "I like me better when I'm with you."
   },
 
-  // --- MEDIUM (Goblin Clash of Clans Gold/Green Theme: 5-7) ---
+  // --- MEDIUM (Goblin Theme: 5-7) ---
   {
     difficulty: "Medium",
     theme: "theme-goblin",
-    mascot: "🪙 Goblin ⚔️",
-    themeLabel: "CLASH GOBLIN 💚",
     question: "5. Where did it all begin?",
     options: ["Palmera Park", "Discord Call", "Greenbelt Mall", "Coffee Project"],
     correctIndex: 0,
-    hint: "Starts with letter P and has lots of trees! 🌳"
+    hint: "Starts with the letter P."
   },
   {
     difficulty: "Medium",
     theme: "theme-goblin",
-    mascot: "🪙 Goblin ⚔️",
-    themeLabel: "CLASH GOBLIN 💚",
     question: "6. What was our very first couple item?",
     options: ["Matching Hoodies", "Rubber bands", "Promise Rings", "Keychain plushies"],
     correctIndex: 1,
-    hint: "Simple, stretchy, and holds everything together! 🪢"
+    hint: "Simple, stretchy, and holds things together."
   },
   {
     difficulty: "Medium",
     theme: "theme-goblin",
-    mascot: "🪙 Goblin ⚔️",
-    themeLabel: "CLASH GOBLIN 💚",
     question: "7. Who is my absolute main champion in League of Legends?",
     options: ["Yasuo", "Aphelios", "Jhin", "Ezreal"],
     correctIndex: 2,
-    hint: "ONE, TWO, THREE, FOUR! 🎭"
+    hint: "ONE, TWO, THREE, FOUR."
   },
 
-  // --- HARD (Cinnamoroll Pastel Theme: 8-10) ---
+  // --- HARD (Cinnamoroll Theme: 8-10) ---
   {
     difficulty: "Hard",
     theme: "theme-cinnamoroll",
-    mascot: "☁️ Cinnamoroll 🎀",
-    themeLabel: "CINNAMOROLL ☁️",
     question: "8. Identification: What is the most memorable place we've ever been together?",
     options: [],
     correctAnswer: "livingroom",
-    hint: "Inside joke: It's cozy, has a couch, and you don't even need to leave the house! 🛋️"
+    hint: "Inside joke: Cozy, has a couch, and you don't even need to leave the house."
   },
   {
     difficulty: "Hard",
     theme: "theme-cinnamoroll",
-    mascot: "☁️ Cinnamoroll 🎀",
-    themeLabel: "CINNAMOROLL ☁️",
     question: "9. Identification: Name all 4 of our children!",
     options: [],
-    // Handled in custom verification logic to check for all 4 names
     correctAnswer: "zilla wagyu paotsin stitch",
-    hint: "Our 4 babies: Z____, W____, P______, and S____! (Separate with spaces or commas) 🐾"
+    hint: "Our 4 babies: Z____, W____, P______, and S____! (Separate with spaces or commas)"
   },
   {
     difficulty: "Hard",
     theme: "theme-cinnamoroll",
-    mascot: "☁️ Cinnamoroll 🎀",
-    themeLabel: "CINNAMOROLL ☁️",
     question: "10. Final Identification: What is my absolute favorite phrase to hear from you?",
     options: [],
     correctAnswer: "iloveyou",
-    hint: "3 magic words! ❤️"
+    hint: "3 magic words."
   }
 ];
 
-// Your custom birthday message
-const longLetterText = `NYHAHAHAHAHAHAHA happy birthday you goblin looking human! 🎂👹
+const longLetterText = `NYHAHAHAHAHAHAHA happy birthday you goblin looking human!
 
-I hope you enjoy your day without me cuz u stinky! NYAHAHHAH 🤪💨
+I hope you enjoy your day without me cuz u stinky! NYAHAHHAH
 
-And please be kind to others since u are an old hag now! 👵✨
+And please be kind to others since u are an old hag now!
 
-I love you so much! That's all bleeeeepppp 😛❤️`;
+I love you so much! That's all bleeeeepppp`;
 
 /* =================================================================
    STATE & LOGIC CONTROLLER
@@ -131,7 +109,6 @@ let currentQ = 0;
 let isTransitioning = false;
 let typeWriterInterval = null;
 
-// Tab Lock Protocol
 window.addEventListener('beforeunload', (e) => {
   if (!isUnlocked) {
     e.preventDefault();
@@ -152,12 +129,13 @@ const hintBox = document.getElementById('hint-box');
 
 const copyBtn = document.getElementById('copy-btn');
 const restartBtn = document.getElementById('restart-btn');
+const stitchVideo = document.getElementById('stitch-video-bg');
 
 document.addEventListener('DOMContentLoaded', () => {
   passwordForm.addEventListener('submit', handleAuth);
   fakeSafetyBtn.addEventListener('click', () => {
     authFeedback.style.color = '#fff';
-    authFeedback.textContent = "⚠️ There is no going back. Enter the password to escape.";
+    authFeedback.textContent = "There is no going back. Enter the password to escape.";
   });
 
   identForm.addEventListener('submit', handleIdentSubmit);
@@ -170,7 +148,6 @@ function cleanStr(str) {
   return str.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
 }
 
-// Authentication Transition
 function handleAuth(e) {
   e.preventDefault();
   const val = cleanStr(passkeyInput.value);
@@ -178,17 +155,21 @@ function handleAuth(e) {
   if (val === cleanStr(SECRET_PASSKEY)) {
     isUnlocked = true;
     authFeedback.style.color = '#a7f3d0';
-    authFeedback.textContent = 'Quarantine Lifted. Unlocking Birthday Quest... ✨';
+    authFeedback.textContent = 'Quarantine Lifted. Unlocking Birthday Quest...';
     
     confetti({ particleCount: 35, spread: 70, origin: { y: 0.6 } });
 
     setTimeout(() => {
       document.body.classList.remove('warning-mode');
       document.body.classList.add('quest-mode');
-      document.title = "Happy Birthday! 🎂❤️";
+      document.title = "Happy Birthday!";
 
       document.getElementById('screen-warning').style.display = 'none';
       document.getElementById('quest-container').style.display = 'block';
+
+      if (stitchVideo) {
+        stitchVideo.play().catch(() => {});
+      }
 
       renderQuestion();
     }, 1000);
@@ -200,17 +181,16 @@ function handleAuth(e) {
   }
 }
 
-// Render dynamic theme per difficulty level
 function renderQuestion() {
   isTransitioning = false;
   const q = quizData[currentQ];
   
-  // Set Body Theme
   document.body.className = `quest-mode ${q.theme}`;
 
-  // Mascot & Header Tags
-  document.getElementById('mascot-emoji').textContent = q.mascot;
-  document.getElementById('theme-tag').textContent = q.themeLabel;
+  if (q.theme === 'theme-stitch' && stitchVideo) {
+    stitchVideo.play().catch(() => {});
+  }
+
   document.getElementById('quiz-level-badge').textContent = `LEVEL ${currentQ + 1} OF ${quizData.length}`;
   document.getElementById('progress-bar').style.width = `${((currentQ) / quizData.length) * 100}%`;
 
@@ -236,7 +216,7 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
-      btn.innerHTML = `<span>${opt}</span><span>✨</span>`;
+      btn.textContent = opt;
       btn.onclick = () => handleChoice(btn, idx);
       optContainer.appendChild(btn);
     });
@@ -252,7 +232,7 @@ function handleChoice(btn, idx) {
     advanceNext(btn);
   } else {
     btn.classList.add('wrong');
-    feedback.textContent = q.hint || "Oopsie! Try another one! 💡";
+    feedback.textContent = q.hint || "Incorrect, try another option.";
     setTimeout(() => btn.classList.remove('wrong'), 500);
   }
 }
@@ -268,7 +248,6 @@ function handleIdentSubmit(e) {
 
   let isCorrect = false;
 
-  // Custom check for Question 9 (children: Zilla, Wagyu, Paotsin, Stitch in any order)
   if (currentQ === 8) {
     const hasZilla = rawInput.includes("zilla");
     const hasWagyu = rawInput.includes("wagyu");
@@ -285,7 +264,7 @@ function handleIdentSubmit(e) {
     advanceNext(identInput);
   } else {
     identInput.classList.add('input-error');
-    feedback.textContent = q.hint || "Almost there! Click the hint if you need help!";
+    feedback.textContent = q.hint || "Incorrect. Check your spelling or click the hint.";
     setTimeout(() => identInput.classList.remove('input-error'), 400);
   }
 }
@@ -299,7 +278,7 @@ function advanceNext(targetElement) {
   if (targetElement.classList) targetElement.classList.add('correct');
   
   const feedback = document.getElementById('quiz-feedback');
-  feedback.textContent = "Yay! Correct! 🌟 Next level loading...";
+  feedback.textContent = "Correct! Next level loading...";
   
   confetti({ particleCount: 25, spread: 60, origin: { y: 0.7 } });
 
@@ -320,7 +299,6 @@ function showGrandPrize() {
   document.getElementById('screen-quiz').style.display = 'none';
   document.getElementById('screen-prize').style.display = 'block';
 
-  // Confetti Explosion
   const duration = 4 * 1000;
   const end = Date.now() + duration;
   const colors = ['#f472b6', '#38bdf8', '#fde047', '#ffffff', '#c084fc'];
@@ -357,7 +335,7 @@ function startTypewriter(text, elId, speed) {
 function copyLetter() {
   navigator.clipboard.writeText(longLetterText).then(() => {
     const feedback = document.getElementById('prize-feedback');
-    feedback.textContent = 'Letter copied to clipboard! 📋🎀';
+    feedback.textContent = 'Letter copied to clipboard!';
     setTimeout(() => feedback.textContent = '', 3000);
   });
 }
